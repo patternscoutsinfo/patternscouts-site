@@ -1,0 +1,74 @@
+/* Extra styles for the rich Crow product page */
+
+/* trust bar */
+.trust-bar { background: #EEF5F2; border-top: 1px solid #D3DAD6; border-bottom: 1px solid #D3DAD6; padding: 16px 0; }
+.trust-bar__inner { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #56636E; }
+.trust-item svg { width: 15px; height: 15px; color: #17624F; flex: none; }
+
+/* rich sections */
+.rich-section { padding: 72px 0; }
+.rich-section--alt { background: #FFFFFF; }
+.rich-head { margin-bottom: 44px; }
+.rich-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #1E7A62; }
+.rich-head h2 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(24px, 4vw, 38px); font-weight: 700; letter-spacing: -.02em; margin-top: 10px; }
+.rich-head p { font-size: 16px; color: #56636E; max-width: 54ch; margin-top: 10px; line-height: 1.75; }
+
+/* steps */
+.rich-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0; border: 1px solid #D3DAD6; }
+.rich-step { padding: 28px 24px; border-right: 1px solid #D3DAD6; background: #fff; }
+.rich-step:last-child { border-right: none; }
+.rich-step__num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #17624F; letter-spacing: .12em; margin-bottom: 12px; }
+.rich-step__icon { width: 40px; height: 40px; background: #EEF5F2; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.rich-step__icon svg { width: 20px; height: 20px; stroke: #17624F; }
+.rich-step h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 15px; margin-bottom: 7px; }
+.rich-step p  { font-size: 13px; color: #56636E; line-height: 1.65; }
+@media (max-width: 720px) { .rich-steps { grid-template-columns: 1fr; } .rich-step { border-right: none; border-bottom: 1px solid #D3DAD6; } .rich-step:last-child { border-bottom: none; } }
+
+/* before / after */
+.ba { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: start; }
+.ba__panel { border: 1px solid #D3DAD6; background: #fff; border-radius: 10px; overflow: hidden; }
+.ba__panel-head { padding: 10px 14px; border-bottom: 1px solid #D3DAD6; font-family: 'IBM Plex Mono', monospace; font-size: 11px; display: flex; align-items: center; gap: 7px; }
+.ba__panel-head--bad  { color: #A8431E; }
+.ba__panel-head--good { color: #17624F; }
+.ba__row { display: grid; grid-template-columns: 26px 1fr 1fr 1fr; font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 12px; border-bottom: 1px solid rgba(0,0,0,.04); }
+.ba__row--header { background: #F4F6F4; color: #56636E; font-size: 10px; }
+.ba__row .bad  { color: #A8431E; }
+.ba__row .good { color: #0E3C30; font-weight: 500; }
+.ba__row .flag { color: #B45309; }
+.ba__arrow { display: flex; align-items: center; justify-content: center; color: #17624F; font-size: 22px; padding: 16px 0; }
+@media (max-width: 680px) { .ba { grid-template-columns: 1fr; } .ba__arrow { display: none; } }
+
+/* usp bar */
+.usp-bar { background: #17624F; padding: 18px 0; text-align: center; }
+.usp-bar__text { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 17px; font-weight: 600; color: #fff; }
+.usp-bar__text em { font-style: normal; color: #6EE7B7; }
+
+/* tools grid */
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: #D3DAD6; border: 1px solid #D3DAD6; border-radius: 12px; overflow: hidden; }
+.tool-card { background: #fff; padding: 24px 20px; transition: background .15s; }
+.tool-card:hover { background: #EEF5F2; }
+.tool-card__cat { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #17624F; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+.tool-card h3 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 14px; margin-bottom: 5px; }
+.tool-card p  { font-size: 13px; color: #56636E; line-height: 1.6; }
+
+/* faq */
+.faq-list { border-top: 1px solid #D3DAD6; }
+.faq-list details { border-bottom: 1px solid #D3DAD6; }
+.faq-list summary { padding: 16px 0; cursor: pointer; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 16px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after { content: '+'; font-size: 20px; color: #17624F; font-weight: 400; flex: none; }
+.faq-list details[open] summary::after { content: '−'; }
+.faq-list details p { padding: 0 0 16px; color: #56636E; font-size: 15px; line-height: 1.75; max-width: 62ch; }
+
+/* download bar */
+.download-bar { background: #1B2030; padding: 56px 0; }
+.download-bar__inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.download-bar h2 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: clamp(22px, 3.5vw, 34px); color: #fff; font-weight: 700; letter-spacing: -.02em; max-width: 22ch; margin-bottom: 10px; }
+.download-bar p  { color: rgba(255,255,255,.5); font-size: 15px; }
+.download-bar__note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(255,255,255,.28); }
+.download-bar__actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; flex: none; }
+.download-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 15px; padding: 14px 24px; background: #fff; color: #0E3C30; border-radius: 8px; text-decoration: none; transition: background .15s; }
+.download-btn:hover { background: #D7E8E1; }
+.download-btn-ghost { display: inline-flex; align-items: center; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 15px; padding: 14px 24px; background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.35); border-radius: 8px; text-decoration: none; transition: background .15s; }
+.download-btn-ghost:hover { background: rgba(255,255,255,.07); }
