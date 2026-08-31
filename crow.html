@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V68SDV8WXV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V68SDV8WXV');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crow — Excel Analysis Tools for Windows | PatternScouts</title>
+<meta name="description" content="Crow is a Windows desktop app by PatternScouts. Open your Excel file, pick a tool, get the answer instantly. No macros, no formulas, no uploads.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────────── */
+:root {
+  --green:      #17624F;
+  --green-dark: #0E3C30;
+  --green-mid:  #1E7A62;
+  --green-lo:   #D7E8E1;
+  --green-pale: #EEF5F2;
+  --ink:        #0E141B;
+  --ink-soft:   #56636E;
+  --paper:      #F0F2F0;
+  --card:       #FFFFFF;
+  --line:       #D3DAD6;
+  --rust:       #A8431E;
+  --mono:       'IBM Plex Mono', monospace;
+  --sans:       'IBM Plex Sans', system-ui, sans-serif;
+  --display:    'Space Grotesk', system-ui, sans-serif;
+}
+
+/* ── RESET ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: var(--green); }
+button { cursor: pointer; border: none; font-family: var(--sans); }
+@media (prefers-reduced-motion: reduce) { *, html { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* ── LAYOUT ──────────────────────────────────────────────────────── */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+.wrap--narrow { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+/* ── TYPOGRAPHY ──────────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: var(--display); line-height: 1.08; letter-spacing: -.02em; }
+.eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); }
+.eyebrow--light { color: rgba(255,255,255,.55); }
+
+/* ── BUTTONS ─────────────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; font-size: 15px; padding: 14px 26px; text-decoration: none; transition: background .15s, transform .1s; border-radius: 2px; }
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--card); color: var(--green-dark); }
+.btn--primary:hover { background: var(--green-lo); }
+.btn--green { background: var(--green); color: #fff; }
+.btn--green:hover { background: var(--green-mid); }
+.btn--ghost { background: transparent; color: var(--card); border: 1.5px solid rgba(255,255,255,.4); }
+.btn--ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.7); }
+.btn--ink { background: var(--ink); color: #fff; }
+.btn--ink:hover { background: #1e2835; }
+
+/* ── PLATFORM STRIP (back to PatternScouts) ──────────────────────── */
+.platform-strip { background: #1B2030; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+.platform-strip__inner { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.platform-strip a.back { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.55); text-decoration: none; letter-spacing: .06em; transition: color .15s; }
+.platform-strip a.back:hover { color: #fff; }
+.platform-strip__brand { margin-left: auto; font-family: var(--display); font-weight: 700; font-size: 13px; color: rgba(255,255,255,.75); text-decoration: none; letter-spacing: -.01em; }
+.platform-strip__brand span { color: #6EE7B7; }
+
+/* ── NAV ─────────────────────────────────────────────────────────── */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(14,20,27,.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.07); }
+.nav__inner { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+.nav__logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav__logo-mark { width: 32px; height: 32px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.nav__logo-mark svg { width: 18px; height: 18px; fill: #fff; }
+.nav__logo-text { font-family: var(--display); font-weight: 700; font-size: 19px; color: #fff; letter-spacing: -.02em; }
+.nav__logo-sub { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.4); letter-spacing: .1em; text-transform: uppercase; }
+.nav__links { display: flex; align-items: center; gap: 28px; }
+.nav__links a { font-size: 14px; color: rgba(255,255,255,.65); text-decoration: none; transition: color .15s; }
+.nav__links a:hover { color: #fff; }
+.nav__cta { font-size: 14px; font-family: var(--display); font-weight: 600; }
+@media (max-width: 700px) { .nav__links { display: none; } }
+
+/* ── HERO ─────────────────────────────────────────────────────────── */
+.hero { background: linear-gradient(160deg, var(--green-dark) 0%, #0a2a1f 55%, #071a14 100%); padding: 100px 0 80px; overflow: hidden; position: relative; }
+.hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+.hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; position: relative; }
+.hero__tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 100px; padding: 5px 14px 5px 8px; margin-bottom: 24px; }
+.hero__tag-dot { width: 7px; height: 7px; background: #4ADE80; border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+.hero__tag span { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.7); letter-spacing: .1em; }
+.hero h1 { font-size: clamp(38px, 5vw, 62px); font-weight: 700; color: #fff; margin-bottom: 22px; }
+.hero h1 em { font-style: normal; color: #6EE7B7; }
+.hero__sub { font-size: 18px; color: rgba(255,255,255,.65); max-width: 46ch; margin-bottom: 36px; line-height: 1.7; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 40px; }
+.hero__note { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.35); letter-spacing: .06em; }
+.hero__stats { display: flex; gap: 36px; flex-wrap: wrap; }
+.hero__stat-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: #fff; }
+.hero__stat-label { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 2px; }
+
+/* hero screen mockup */
+.hero__screen { background: var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08); }
+.hero__screen-bar { background: #1a2332; padding: 10px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,.06); }
+.hero__screen-dots { display: flex; gap: 6px; }
+.hero__screen-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.hero__screen-dots span:nth-child(1) { background: #FF5F57; }
+.hero__screen-dots span:nth-child(2) { background: #FEBC2E; }
+.hero__screen-dots span:nth-child(3) { background: #28C840; }
+.hero__screen-title { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.3); margin-left: 8px; }
+.hero__screen-body { display: flex; min-height: 320px; }
+.hero__sidebar { width: 140px; background: #111d28; padding: 16px 0; flex: none; }
+.hero__sidebar-logo { padding: 4px 14px 16px; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 12px; font-family: var(--display); font-size: 15px; font-weight: 700; color: #fff; }
+.hero__sidebar-item { padding: 8px 14px; font-size: 11px; color: rgba(255,255,255,.4); display: flex; align-items: center; gap: 8px; }
+.hero__sidebar-item.active { background: var(--green); color: #fff; border-radius: 0; }
+.hero__sidebar-item span { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .6; flex: none; }
+.hero__content { flex: 1; padding: 20px; }
+.hero__content-head { font-family: var(--display); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 14px; }
+.mock-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mock-card { background: #1a2332; border-radius: 6px; padding: 12px; border: 1px solid rgba(255,255,255,.06); }
+.mock-card-letter { width: 28px; height: 28px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.mock-card-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.85); margin-bottom: 3px; }
+.mock-card-desc { font-size: 10px; color: rgba(255,255,255,.35); line-height: 1.4; }
+.mock-card-btn { margin-top: 8px; background: var(--green); color: #fff; font-size: 9px; padding: 4px 8px; border-radius: 3px; font-family: var(--display); font-weight: 600; display: inline-block; }
+
+@media (max-width: 900px) {
+  .hero__inner { grid-template-columns: 1fr; }
+  .hero__screen { display: none; }
+}
+
+/* ── SECTION BASE ────────────────────────────────────────────────── */
+.section { padding: 88px 0; }
+.section--alt { background: var(--card); }
+.section--dark { background: var(--ink); }
+.section--green { background: var(--green); }
+.section__head { margin-bottom: 52px; }
+.section__head h2 { font-size: clamp(28px, 4vw, 44px); margin-top: 10px; }
+.section__head p { font-size: 17px; color: var(--ink-soft); max-width: 54ch; margin-top: 14px; line-height: 1.7; }
+
+/* ── HOW IT WORKS ────────────────────────────────────────────────── */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; border: 1px solid var(--line); }
+.step { padding: 32px 28px; border-right: 1px solid var(--line); position: relative; background: var(--card); }
+.step:last-child { border-right: none; }
+.step__num { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: .12em; margin-bottom: 16px; }
+.step__icon { width: 44px; height: 44px; background: var(--green-pale); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.step__icon svg { width: 22px; height: 22px; stroke: var(--green); fill: none; stroke-width: 1.8; }
+.step h3 { font-size: 17px; margin-bottom: 8px; }
+.step p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+@media (max-width: 780px) { .steps { grid-template-columns: 1fr; } .step { border-right: none; border-bottom: 1px solid var(--line); } .step:last-child { border-bottom: none; } }
+
+/* ── CUSTOM SECTION ──────────────────────────────────────────────── */
+.custom-section { background: var(--ink); padding: 88px 0; }
+.custom-section h2 { color: #fff; font-size: clamp(28px, 4vw, 44px); margin-top: 10px; }
+.custom-section .section__head p { color: rgba(255,255,255,.5); }
+.custom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; }
+@media(max-width:700px){ .custom-grid { grid-template-columns: 1fr; } }
+.custom-steps-list { list-style: none; margin-top: 24px; }
+.custom-steps-list li { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.08); align-items: flex-start; }
+.custom-steps-list li:last-child { border-bottom: none; }
+.custom-step-num { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: .1em; flex: none; padding-top: 3px; width: 28px; }
+.custom-step-text h4 { font-family: var(--display); font-size: 16px; color: #fff; margin-bottom: 4px; }
+.custom-step-text p { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.6; margin: 0; }
+.custom-right { background: #111d28; border: 1px solid rgba(255,255,255,.08); padding: 28px; }
+.custom-right-head { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 18px; }
+.example-request { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); padding: 18px; margin-bottom: 12px; border-radius: 2px; }
+.example-request-tag { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.3); letter-spacing: .1em; margin-bottom: 6px; }
+.example-request-title { font-family: var(--display); font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 6px; }
+.example-request-steps { font-size: 12px; color: rgba(255,255,255,.4); line-height: 1.7; }
+.custom-cta { margin-top: 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.custom-cta-note { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.25); }
+.usp-bar { background: var(--green); padding: 20px 0; }
+.usp-bar__inner { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.usp-bar__text { font-family: var(--display); font-size: 18px; font-weight: 600; color: #fff; text-align: center; }
+.usp-bar__text em { font-style: normal; color: #6EE7B7; }
+
+/* ── TOOLS ───────────────────────────────────────────────────────── */
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.tool-card { background: var(--card); padding: 28px 24px; transition: background .15s; }
+.tool-card:hover { background: var(--green-pale); }
+.tool-card__cat { font-family: var(--mono); font-size: 10px; color: var(--green); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
+.tool-card h3 { font-size: 16px; margin-bottom: 7px; }
+.tool-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+/* ── BEFORE AFTER ────────────────────────────────────────────────── */
+.ba { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: start; }
+.ba__panel { border: 1px solid var(--line); background: var(--card); }
+.ba__panel-head { padding: 10px 16px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11px; display: flex; align-items: center; gap: 8px; }
+.ba__panel-head--bad { color: var(--rust); }
+.ba__panel-head--good { color: var(--green); }
+.ba__panel-body { padding: 4px 0; }
+.ba__row { display: grid; grid-template-columns: 32px 1fr 1fr 1fr; font-family: var(--mono); font-size: 11px; padding: 5px 12px; border-bottom: 1px solid rgba(0,0,0,.04); }
+.ba__row.header { background: #F4F6F4; color: var(--ink-soft); font-size: 10px; }
+.ba__row .bad { color: var(--rust); }
+.ba__row .good { color: var(--green-dark); font-weight: 500; }
+.ba__row .flag { color: #B45309; }
+.ba__arrow { display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 24px; padding: 20px 0; }
+@media (max-width: 700px) { .ba { grid-template-columns: 1fr; } .ba__arrow { display: none; } }
+
+/* ── PRICING ─────────────────────────────────────────────────────── */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.plan { background: var(--card); padding: 32px 28px; }
+.plan--featured { background: var(--green); color: #fff; }
+.plan__label { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 14px; }
+.plan--featured .plan__label { color: rgba(255,255,255,.55); }
+.plan__price { font-family: var(--display); font-size: 48px; font-weight: 700; line-height: 1; margin-bottom: 4px; letter-spacing: -.03em; }
+.plan--featured .plan__price { color: #fff; }
+.plan__strike { font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.plan--featured .plan__strike { color: rgba(255,255,255,.55); }
+.plan__strike-was { text-decoration: line-through; opacity: .6; }
+.plan__strike-save { font-family: var(--mono); font-size: 10px; background: #FEF3C7; color: #92400E; padding: 2px 7px; border-radius: 100px; font-weight: 600; letter-spacing: .04em; }
+.plan--featured .plan__strike-save { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+.plan__period { font-size: 13px; color: var(--ink-soft); margin-bottom: 24px; }
+.plan--featured .plan__period { color: rgba(255,255,255,.65); }
+.plan__loading { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+.plan ul { list-style: none; margin-bottom: 28px; }
+.plan li { padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; display: flex; align-items: center; gap: 8px; color: var(--ink-soft); }
+.plan--featured li { border-color: rgba(255,255,255,.15); color: rgba(255,255,255,.8); }
+.plan li::before { content: '✓'; color: var(--green); font-weight: 700; flex: none; }
+.plan--featured li::before { color: #6EE7B7; }
+.plan .btn { width: 100%; justify-content: center; }
+@media (max-width: 700px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+/* pricing loading state */
+.price-val { transition: opacity .3s; }
+.price-val.loading { opacity: .3; }
+
+/* ── COMBO ───────────────────────────────────────────────────────── */
+.combo { background: var(--green-dark); color: #fff; border-radius: 14px; padding: 32px; display: grid; gap: 24px; grid-template-columns: 1fr auto; align-items: center; margin-top: 32px; }
+.combo h3 { font-size: 1.5rem; margin-bottom: 8px; color: #fff; }
+.combo p { color: var(--green-lo); margin-bottom: 14px; max-width: 52ch; }
+.combo ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+.combo li { font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); padding: 5px 10px; border-radius: 999px; }
+.combo-price { text-align: right; }
+.combo-price .cprice { color: #6EE7B7; font-family: var(--display); font-size: 2.2rem; font-weight: 700; display: block; letter-spacing: -.03em; }
+.combo-price .cstrike { color: rgba(255,255,255,.5); text-decoration: line-through; font-size: 15px; display: block; }
+.combo-price .csaving { font-family: var(--mono); font-size: 12px; color: #4ADE80; display: block; margin-bottom: 12px; }
+@media (max-width: 700px) { .combo { grid-template-columns: 1fr; } .combo-price { text-align: left; } }
+
+/* ── FAQ ─────────────────────────────────────────────────────────── */
+.faq-list { border-top: 1px solid var(--line); }
+details { border-bottom: 1px solid var(--line); }
+summary { padding: 20px 0; cursor: pointer; font-family: var(--display); font-size: 17px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '+'; font-size: 22px; color: var(--green); font-weight: 400; flex: none; }
+details[open] summary::after { content: '−'; }
+details p { padding: 0 0 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.75; max-width: 62ch; }
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+.footer { background: var(--ink); padding: 56px 0 32px; }
+.footer__top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer__brand-name { font-family: var(--display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.footer__brand-desc { font-size: 14px; color: rgba(255,255,255,.4); line-height: 1.7; max-width: 30ch; }
+.footer__col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 16px; }
+.footer__col a { display: block; font-size: 14px; color: rgba(255,255,255,.55); text-decoration: none; margin-bottom: 10px; transition: color .15s; }
+.footer__col a:hover { color: #fff; }
+.footer__bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.footer__copy { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.25); }
+.footer__made { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.2); }
+@media (max-width: 700px) { .footer__top { grid-template-columns: 1fr; gap: 32px; } }
+
+/* ── DOWNLOAD BANNER ─────────────────────────────────────────────── */
+.download-bar { background: var(--green-dark); border-top: 1px solid rgba(255,255,255,.08); padding: 64px 0; }
+.download-bar__inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.download-bar h2 { font-size: clamp(24px, 3.5vw, 38px); color: #fff; max-width: 20ch; }
+.download-bar p { color: rgba(255,255,255,.55); margin-top: 10px; font-size: 15px; }
+.download-bar__actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; flex: none; }
+.download-bar__note { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,.3); margin-top: 10px; }
+
+/* ── TRUST BAR ───────────────────────────────────────────────────── */
+.trust { background: var(--green-pale); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; }
+.trust__inner { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.trust__item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-soft); }
+.trust__item svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 2; flex: none; }
+
+/* ── MISC ────────────────────────────────────────────────────────── */
+.text-green { color: var(--green); }
+.text-white { color: #fff; }
+.text-muted { color: var(--ink-soft); }
+.mt-4 { margin-top: 16px; }
+.mt-8 { margin-top: 32px; }
+
+/* ── CONTACT MODAL ───────────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--card);
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,.35);
+  animation: modal-in .2s ease;
+}
+@keyframes modal-in { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+.modal__head { background: var(--green); padding: 28px 32px 24px; }
+.modal__head h3 { font-family: var(--display); font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.modal__head p { font-size: 14px; color: rgba(255,255,255,.65); }
+.modal__close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: rgba(255,255,255,.7); font-size: 24px; cursor: pointer; line-height: 1; padding: 4px 8px; }
+.modal__close:hover { color: #fff; }
+.modal__body { padding: 32px; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 7px; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  padding: 11px 14px;
+  outline: none;
+  border-radius: 2px;
+  transition: border-color .15s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--green); background: #fff; }
+.form-group textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+.form-submit { width: 100%; padding: 14px; font-family: var(--display); font-size: 16px; font-weight: 700; background: var(--green); color: #fff; border: none; cursor: pointer; border-radius: 2px; transition: background .15s; margin-top: 8px; }
+.form-submit:hover { background: var(--green-mid); }
+.form-submit:disabled { opacity: .6; cursor: not-allowed; }
+.form-status { margin-top: 14px; font-size: 14px; text-align: center; min-height: 20px; }
+.form-status.success { color: var(--green); font-weight: 600; }
+.form-status.error { color: var(--rust); }
+
+/* visitor bar */
+.visitor-bar { background: #0a1a14; border-bottom: 1px solid rgba(255,255,255,.08); padding: 9px 0; }
+.visitor-bar__inner { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.visitor-stat { display: flex; align-items: center; gap: 8px; }
+.visitor-stat__num { font-family: var(--display); font-size: 15px; font-weight: 700; color: #6EE7B7; }
+.visitor-stat__label { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.3); letter-spacing: .08em; text-transform: uppercase; }
+.visitor-divider { width: 1px; height: 20px; background: rgba(255,255,255,.1); }
+.visitor-live { display: flex; align-items: center; gap: 6px; }
+.visitor-live-dot { width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; animation: pulse 2s infinite; flex: none; }
+.visitor-live-text { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,.3); letter-spacing: .06em; }
+</style>
+</head>
+<body>
+
+<!-- PLATFORM STRIP -->
+<div class="platform-strip">
+  <div class="wrap platform-strip__inner">
+    <a class="back" href="index.html">&larr; ALL PATTERNSCOUTS SOFTWARE</a>
+    <a class="platform-strip__brand" href="index.html">Pattern<span>Scouts</span></a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a href="#" class="nav__logo">
+      <div class="nav__logo-mark">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <div>
+        <div class="nav__logo-text">Crow</div>
+        <div class="nav__logo-sub">Pattern Scouts</div>
+      </div>
+    </a>
+    <div class="nav__links">
+      <a href="#tools">Tools</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Help</a>
+      <a href="#" onclick="openModal();return false;">Contact</a>
+    </div>
+    <a href="#download" class="btn btn--green nav__cta">Download</a>
+  </div>
+</nav>
+
+<!-- VISITOR BAR -->
+<div class="visitor-bar" id="visitor-bar">
+  <div class="wrap visitor-bar__inner">
+    <div class="visitor-stat">
+      <div class="visitor-stat__num" id="vs-today">—</div>
+      <div class="visitor-stat__label">Today</div>
+    </div>
+    <div class="visitor-divider"></div>
+    <div class="visitor-stat">
+      <div class="visitor-stat__num" id="vs-month">—</div>
+      <div class="visitor-stat__label">This month</div>
+    </div>
+    <div class="visitor-divider"></div>
+    <div class="visitor-stat">
+      <div class="visitor-stat__num" id="vs-year">—</div>
+      <div class="visitor-stat__label">This year</div>
+    </div>
+    <div class="visitor-divider"></div>
+    <div class="visitor-live">
+      <span class="visitor-live-dot"></span>
+      <span class="visitor-live-text">Live tracking active</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__inner">
+      <div>
+        <div class="hero__tag">
+          <span class="hero__tag-dot"></span>
+          <span>Windows 10 &amp; 11 &nbsp;·&nbsp; No Excel needed</span>
+        </div>
+        <h1>Your Excel file in.<br><em>The answer</em> out.</h1>
+        <p class="hero__sub">Crow is a desktop app with ready-made tools for your spreadsheets. Open the file, pick a tool, read the result. No formulas to write, no macros to install, nothing uploaded anywhere.</p>
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6EE7B7;letter-spacing:.04em;margin-bottom:20px;margin-top:-8px;">Don't see what you need? We build it for you. <span style="color:rgba(255,255,255,.35);">Every tool in Crow started as a user request.</span></p>
+        <div class="hero__actions">
+          <a href="#download" class="btn btn--primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Crow — Free Trial
+          </a>
+          <a href="#pricing" class="btn btn--ghost">See pricing</a>
+        </div>
+        <div class="hero__note">Trial · <span id="trial-note-price">₹10</span> &nbsp;·&nbsp; Installs in under a minute</div>
+        <div class="hero__stats" style="margin-top:40px">
+          <div>
+            <div class="hero__stat-num" id="stat-tools">16+</div>
+            <div class="hero__stat-label">Ready-made tools</div>
+          </div>
+          <div>
+            <div class="hero__stat-num" id="stat-cats">4</div>
+            <div class="hero__stat-label">Tool categories</div>
+          </div>
+          <div>
+            <div class="hero__stat-num">0</div>
+            <div class="hero__stat-label">Uploads, ever</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- App mockup -->
+      <div class="hero__screen">
+        <div class="hero__screen-bar">
+          <div class="hero__screen-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="hero__screen-title">Crow · Data Analysis Tools</span>
+        </div>
+        <div class="hero__screen-body">
+          <div class="hero__sidebar">
+            <div class="hero__sidebar-logo">Crow</div>
+            <div class="hero__sidebar-item"><span></span>Dashboard</div>
+            <div class="hero__sidebar-item active"><span></span>General</div>
+            <div class="hero__sidebar-item"><span></span>Operations</div>
+            <div class="hero__sidebar-item"><span></span>HR</div>
+            <div class="hero__sidebar-item"><span></span>Vendor</div>
+            <div class="hero__sidebar-item"><span></span>GST</div>
+          </div>
+          <div class="hero__content">
+            <div class="hero__content-head">General</div>
+            <div class="mock-cards">
+              <div class="mock-card">
+                <div class="mock-card-letter">D</div>
+                <div class="mock-card-name">Duplicate Finder</div>
+                <div class="mock-card-desc">Find potential duplicate records</div>
+                <div class="mock-card-btn">Open →</div>
+              </div>
+              <div class="mock-card">
+                <div class="mock-card-letter">X</div>
+                <div class="mock-card-name">Excel Merger</div>
+                <div class="mock-card-desc">Combine multiple files into one</div>
+                <div class="mock-card-btn">Open →</div>
+              </div>
+              <div class="mock-card">
+                <div class="mock-card-letter">N</div>
+                <div class="mock-card-name">Near-Duplicate</div>
+                <div class="mock-card-desc">Fuzzy match across records</div>
+                <div class="mock-card-btn">Open →</div>
+              </div>
+              <div class="mock-card">
+                <div class="mock-card-letter">F</div>
+                <div class="mock-card-name">Filtered Data</div>
+                <div class="mock-card-desc">Extract working subsets fast</div>
+                <div class="mock-card-btn">Open →</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="wrap trust__inner">
+    <div class="trust__item">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Your data never leaves your computer
+    </div>
+    <div class="trust__item">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      No Excel installation required
+    </div>
+    <div class="trust__item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Updates automatically in the background
+    </div>
+    <div class="trust__item">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Made in Mumbai for Indian businesses
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section section--alt" id="how-it-works">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">Getting started</p>
+      <h2>Four steps. Then you're working.</h2>
+      <p>No installer wizard with 12 screens. No account to create before you can see anything. Just download, register inside the app, pay once, and start.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">01</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+        <h3>Download CrowSetup.exe</h3>
+        <p>One file. Double-click it. Crow installs itself in the right place with a Desktop shortcut. No admin password needed.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Register inside Crow</h3>
+        <p>Fill in your name and contact details. Pick a plan. A QR code appears on screen for UPI payment.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <h3>Pay by UPI</h3>
+        <p>Scan the QR code and pay. Email us the payment screenshot. Your licence key arrives within one business day.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">04</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Enter your key and start</h3>
+        <p>Paste the key once. Crow opens straight to your tools every time after that, and updates itself in the background.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">What Crow actually does</p>
+      <h2>Messy spreadsheet in.<br>Clean result out.</h2>
+      <p>Every tool cleans your data on load — trailing spaces, mixed case, wrong date formats, numbers stored as text — before it even starts the analysis.</p>
+    </div>
+    <div class="ba">
+      <div class="ba__panel">
+        <div class="ba__panel-head ba__panel-head--bad">✕ &nbsp; What you have</div>
+        <div class="ba__panel-body">
+          <div class="ba__row header"><span>#</span><span>Vendor</span><span>Invoice</span><span>Amount</span></div>
+          <div class="ba__row"><span>1</span><span class="bad">&nbsp;shah traders</span><span class="bad">INV 0921</span><span class="bad">₹ 12,400 </span></div>
+          <div class="ba__row"><span>2</span><span class="bad">SHAH TRADERS  </span><span class="bad">inv-0921</span><span class="bad">12400</span></div>
+          <div class="ba__row"><span>3</span><span class="bad">Shah Traders</span><span class="bad">INV-0921</span><span class="bad">Rs12400</span></div>
+        </div>
+      </div>
+      <div class="ba__arrow">→</div>
+      <div class="ba__panel">
+        <div class="ba__panel-head ba__panel-head--good">✓ &nbsp; What Crow gives you</div>
+        <div class="ba__panel-body">
+          <div class="ba__row header"><span>#</span><span>Vendor</span><span>Invoice</span><span>Amount</span></div>
+          <div class="ba__row"><span>1</span><span class="good">Shah Traders</span><span class="good">INV-0921</span><span class="good">12,400.00</span></div>
+          <div class="ba__row"><span>2</span><span class="flag">Shah Traders</span><span class="flag">INV-0921</span><span class="flag">⚠ duplicate</span></div>
+          <div class="ba__row"><span>3</span><span class="flag">Shah Traders</span><span class="flag">INV-0921</span><span class="flag">⚠ duplicate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USP BAR -->
+<div class="usp-bar">
+  <div class="wrap usp-bar__inner">
+    <div class="usp-bar__text">
+      Don't see what you need? <em>We'll build it for you.</em> Every Crow tool started as a user request.
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM TOOLS -->
+<section class="custom-section" id="custom">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow eyebrow--light">Built to your workflow</p>
+      <h2>Your process. Your tool.</h2>
+      <p>The <span id="custom-tool-count">16</span> tools in Crow today exist because users described the jobs they were doing by hand. If your work isn't covered — describe it, and we build it. That's the deal.</p>
+    </div>
+
+    <div class="custom-grid">
+      <div class="custom-left">
+        <ul class="custom-steps-list">
+          <li>
+            <span class="custom-step-num">01</span>
+            <div class="custom-step-text">
+              <h4>Open Crow and click "Request a tool"</h4>
+              <p>A simple form appears. No email to write, no attachment to send.</p>
+            </div>
+          </li>
+          <li>
+            <span class="custom-step-num">02</span>
+            <div class="custom-step-text">
+              <h4>Describe the job in plain words</h4>
+              <p>Write it the way you'd explain it to a new colleague. Step 1, Step 2, Step 3. Give one example file or scenario if you can.</p>
+            </div>
+          </li>
+          <li>
+            <span class="custom-step-num">03</span>
+            <div class="custom-step-text">
+              <h4>We reply inside the same window</h4>
+              <p>You can see our reply, ask questions, and refine the requirement — all from inside Crow. No email thread to manage.</p>
+            </div>
+          </li>
+          <li>
+            <span class="custom-step-num">04</span>
+            <div class="custom-step-text">
+              <h4>The tool lands in Crow automatically</h4>
+              <p>Once built, it appears in your tool list on the next launch. No download, no reinstall, no action needed from you.</p>
+            </div>
+          </li>
+        </ul>
+        <div class="custom-cta">
+          <a href="#download" class="btn btn--green">Download Crow to request a tool</a>
+          <span class="custom-cta-note">Included in every plan</span>
+        </div>
+      </div>
+
+      <div class="custom-right">
+        <div class="custom-right-head">Real requests we've received</div>
+
+        <div class="example-request">
+          <div class="example-request-tag">VENDOR · General</div>
+          <div class="example-request-title">Duplicate invoice finder</div>
+          <div class="example-request-steps">
+            1. Read vendor name, invoice number and amount from each row<br>
+            2. Flag any row where the same invoice appears more than once<br>
+            3. Mark rows where the amount differs but vendor + invoice match
+          </div>
+        </div>
+
+        <div class="example-request">
+          <div class="example-request-tag">HR · Operations</div>
+          <div class="example-request-title">Monthly attendance summary</div>
+          <div class="example-request-steps">
+            1. Read the muster sheet — one row per employee per day<br>
+            2. Count present, absent, half-day and late for each person<br>
+            3. Output one row per employee with all counts for the month
+          </div>
+        </div>
+
+        <div class="example-request">
+          <div class="example-request-tag">General</div>
+          <div class="example-request-title">Merge and deduplicate master files</div>
+          <div class="example-request-steps">
+            1. Open all Excel files in a selected folder<br>
+            2. Stack them into one sheet<br>
+            3. Remove rows where the ID column is an exact duplicate
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section section--alt" id="tools">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">The toolbox</p>
+      <h2>Every tool you keep doing by hand.</h2>
+      <p>Crow ships with tools across General, Operations, HR, Vendor, and GST. New tools arrive in the background without downloading anything.</p>
+    </div>
+    <!-- Replaced with the live toolbox from crow_tools_manifest('live').
+         The cards below are what shows if that call cannot be made, so
+         the section is never empty and never blocks on the network. -->
+    <div class="tools-grid" id="tools-grid">
+      <div class="tool-card">
+        <div class="tool-card__cat">General</div>
+        <h3>Data Health Scorecard</h3>
+        <p>Score your spreadsheet for completeness, consistency and duplicates before you send it anywhere.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">General</div>
+        <h3>Duplicate Record Finder</h3>
+        <p>Find exact and near-duplicate rows across any column combination, with a fraud-risk flag.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">General</div>
+        <h3>Excel Merger</h3>
+        <p>Combine multiple Excel or CSV files into one clean sheet, with source-file tracking.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">General</div>
+        <h3>Cross Master ID Verifier</h3>
+        <p>Match IDs across two master files and flag every mismatch in seconds.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">General</div>
+        <h3>Stage to Stage Ageing</h3>
+        <p>Calculate how long records spent at each stage of a process — approvals, dispatch, payment.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">Operations</div>
+        <h3>Container Weight Pivot</h3>
+        <p>Pivot container weight data by date, route or product with one click.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">Operations</div>
+        <h3>Transaction Nullifier</h3>
+        <p>Identify transactions that cancel each other out — returns, reversals, credit notes.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">HR</div>
+        <h3>Salary CTC Audit</h3>
+        <p>Reconcile CTC components, check for discrepancies and produce a summary by grade.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">HR</div>
+        <h3>Attendance Audit</h3>
+        <p>Flag absences, late marks and anomalies from raw muster or biometric exports.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">Vendor</div>
+        <h3>Rate Updater</h3>
+        <p>Write updated rates into your Excel file by date range and column conditions.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">Vendor</div>
+        <h3>Vendor Duplicate Finder</h3>
+        <p>Detect duplicate invoices and payments across vendor registers, even with minor variations.</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card__cat">GST</div>
+        <h3>Group and Aggregate</h3>
+        <p>Group rows and aggregate values by any selected columns — totals, counts, averages.</p>
+      </div>
+    </div>
+    <p class="mt-8 text-muted" style="font-size:14px;font-family:var(--mono)">New tools are added regularly. If you need something that isn't here, request it from inside Crow — it goes straight to us.</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section__head">
+      <p class="eyebrow">Pricing</p>
+      <h2>Try it for <span id="trial-heading-price">₹10</span>.</h2>
+      <p>One licence covers one computer. Prices are in Indian rupees and include everything — every tool, every update, every category.</p>
+    </div>
+    <div class="pricing-grid" id="pricing-grid">
+      <div class="plan">
+        <div class="plan__label">Trial</div>
+        <div class="plan__price price-val loading" id="price-trial">₹10</div>
+        <div class="plan__period">To confirm it works on your machine</div>
+        <ul>
+          <li>Full toolbox — all categories</li>
+          <li>Your files stay on your computer</li>
+          <li>Upgrade any time</li>
+        </ul>
+        <a href="#download" class="btn btn--ink">Start trial</a>
+      </div>
+      <div class="plan plan--featured">
+        <div class="plan__label">Monthly</div>
+        <div class="plan__price price-val loading" id="price-monthly">₹499</div>
+        <div class="plan__strike" id="strike-monthly"></div>
+        <div class="plan__period">Per month, billed monthly</div>
+        <ul>
+          <li>Full toolbox — all categories</li>
+          <li>New tools as they ship</li>
+          <li>Silent automatic updates</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#download" class="btn btn--primary">Get started</a>
+      </div>
+      <div class="plan">
+        <div class="plan__label">Yearly</div>
+        <div class="plan__price price-val loading" id="price-yearly">₹7,999</div>
+        <div class="plan__strike" id="strike-yearly"></div>
+        <div class="plan__period">Per year — works out cheaper monthly</div>
+        <ul>
+          <li>Full toolbox — all categories</li>
+          <li>New tools as they ship</li>
+          <li>Silent automatic updates</li>
+          <li>Email support</li>
+        </ul>
+        <a href="#download" class="btn btn--ink">Get started</a>
+      </div>
+    </div>
+    <p class="mt-4 text-muted" style="font-size:13px;text-align:center;font-family:var(--mono)">Payment by UPI · Key delivered within 1 business day</p>
+
+    <!-- Combo offer, injected from ps_catalogue() when one exists -->
+    <div id="combo-slot"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section--alt" id="faq">
+  <div class="wrap--narrow">
+    <div class="section__head">
+      <p class="eyebrow">Help</p>
+      <h2>Questions people actually ask.</h2>
+    </div>
+    <div class="faq-list">
+      <details open>
+        <summary>Does my data leave my computer?</summary>
+        <p>No. Crow opens your spreadsheet on your machine and writes the result back on your machine. The only time it contacts the internet is to check your licence and to fetch new tool versions. Your data is never uploaded anywhere.</p>
+      </details>
+      <details>
+        <summary>Do I need Microsoft Excel installed?</summary>
+        <p>No. Crow reads and writes .xlsx and .csv files on its own. Excel does not need to be on the machine.</p>
+      </details>
+      <details>
+        <summary>How do updates work?</summary>
+        <p>Crow updates itself automatically in the background when your computer starts. You will never see a popup or be asked to do anything. One day you open Crow and it quietly has new tools or improvements — that is it.</p>
+      </details>
+      <details>
+        <summary>I paid but my key has not arrived.</summary>
+        <p>Keys are sent by hand, usually within one business day. If it has been longer, reply to your payment email with the screenshot still attached — we will sort it the same day.</p>
+      </details>
+      <details>
+        <summary>Can I move the licence to another computer?</summary>
+        <p>Yes. Email us from your registered address with the new machine's details and we will move the key across. Your old machine stops using it at that point. Nothing is deleted.</p>
+      </details>
+      <details>
+        <summary>My antivirus is blocking Crow. What do I do?</summary>
+        <p>Add Crow.exe to your antivirus exclusion list. In Kaspersky, go to Exclusions and actions on object detection → Exclusions → Add → browse to Crow.exe → tick File or folder → Add. After that, Crow updates without interruption.</p>
+      </details>
+      <details>
+        <summary>Can I request a tool that doesn't exist yet?</summary>
+        <p>Yes — that is what the Request a tool button is for inside Crow. Describe the job you keep doing by hand, step by step, and it comes straight to us. We build the tools users actually need.</p>
+      </details>
+      <details>
+        <summary>Windows says "Unknown publisher" when I download. Is it safe?</summary>
+        <p>Yes, completely safe. Windows shows this warning for any new software that has not yet built up a download history with Microsoft — it is not a sign of a virus or problem. Click <strong>More info</strong> and then <strong>Run anyway</strong> to install. Once Crow is installed it updates itself silently in the background and you will never see this screen again.</p>
+      </details>
+      <details>
+        <summary>Which versions of Windows does it run on?</summary>
+        <p>Windows 10 and Windows 11, 64-bit.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<div class="download-bar" id="download">
+  <div class="wrap">
+    <div class="download-bar__inner">
+      <div>
+        <h2>Ready to stop doing this by hand?</h2>
+        <p>Download CrowSetup.exe, pay <span id="trial-cta-price">₹10</span>, run it against a file you already know the answer to. If it doesn't earn its place, you've spent <span id="trial-cta-price2">₹10</span>.</p>
+        <div class="download-bar__note" style="margin-top:14px">Windows 10 &amp; 11 · 64-bit · No Excel needed · No admin password</div>
+        <div class="download-bar__note" style="margin-top:6px">Windows may show a safety prompt on first run — click <strong style="color:rgba(255,255,255,.5)">More info → Run anyway</strong>. This is normal for new software.</div>
+      </div>
+      <div class="download-bar__actions">
+        <a href="#" id="download-btn" class="btn btn--primary" style="font-size:16px;padding:16px 32px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download CrowSetup.exe
+        </a>
+        <a href="#" onclick="openModal();return false;" class="btn btn--ghost">Email us a question</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <div class="footer__brand-name">Crow · Pattern Scouts</div>
+        <div class="footer__brand-desc">Desktop data analysis tools for Indian businesses. Your files stay on your computer.</div>
+      </div>
+      <div class="footer__col">
+        <h4>Product</h4>
+        <a href="#tools">Tools</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#download">Download</a>
+      </div>
+      <div class="footer__col">
+        <h4>PatternScouts</h4>
+        <a href="index.html">All software</a>
+        <a href="index.html#combo">Combo offers</a>
+        <a href="#faq">Help &amp; FAQ</a>
+        <a href="mailto:patternscoutsinfo@gmail.com">Email support</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__copy">© 2026 Pattern Scouts. All rights reserved.</div>
+      <div class="footer__made">Made in Mumbai, India.</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script>
+// ── CONFIG (single source: js/config.js) ──────────────────────────
+const SUPA_URL  = window.PS.SUPABASE_URL;
+const SUPA_ANON = window.PS.SUPABASE_ANON_KEY;
+
+// Download URL fetched from GitHub releases API
+// The repo name is intentionally not shown in visible page text.
+const RELEASES_API = "https://api.github.com/repos/patternscoutsinfo/crow-releases/releases/latest";
+
+// ── LOAD PRICING FROM SUPABASE ────────────────────────────────────
+async function loadPricing() {
+  try {
+    const res = await fetch(SUPA_URL + "/rest/v1/rpc/crow_public_settings", {
+      method: "POST",
+      headers: {
+        "apikey": SUPA_ANON,
+        "Authorization": "Bearer " + SUPA_ANON,
+        "Content-Type": "application/json"
+      },
+      body: "{}"
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const p = data.prices || {};
+
+    const fmt = (v) => "₹" + Number(v).toLocaleString("en-IN");
+
+    const trial   = document.getElementById("price-trial");
+    const monthly = document.getElementById("price-monthly");
+    const yearly  = document.getElementById("price-yearly");
+    const strikeM = document.getElementById("strike-monthly");
+    const strikeY = document.getElementById("strike-yearly");
+
+    if (trial   && p.trial   != null) {
+      trial.textContent = fmt(p.trial);
+      trial.classList.remove("loading");
+      const t = fmt(p.trial);
+      ["trial-note-price","trial-heading-price","trial-cta-price","trial-cta-price2"]
+        .forEach(id => { const el = document.getElementById(id); if(el) el.textContent = t; });
+    }
+    if (monthly && p.monthly != null) { monthly.textContent = fmt(p.monthly); monthly.classList.remove("loading"); }
+    if (yearly  && p.yearly  != null) { yearly.textContent  = fmt(p.yearly);  yearly.classList.remove("loading"); }
+
+    function renderStrike(el, strikeVal, actualVal) {
+      const strike = Number(strikeVal);
+      const actual = Number(actualVal) || 0;
+      if (!el || !strike || strike <= 0 || strike <= actual) return;
+      const saving = actual > 0 ? Math.round((1 - actual/strike)*100) : 0;
+      el.innerHTML =
+        '<span class="plan__strike-was">' + fmt(strike) + '</span>' +
+        (saving > 0 ? '<span class="plan__strike-save">Save ' + saving + '%</span>' : '');
+    }
+
+    const mStrike = (p.monthly_strike && Number(p.monthly_strike) > 0)
+                    ? p.monthly_strike : "1500";
+    const yStrike = (p.yearly_strike  && Number(p.yearly_strike)  > 0)
+                    ? p.yearly_strike  : "15000";
+
+    renderStrike(strikeM, mStrike, p.monthly);
+    renderStrike(strikeY, yStrike, p.yearly);
+
+  } catch (e) {
+    document.querySelectorAll(".price-val").forEach(el => el.classList.remove("loading"));
+  }
+}
+
+// ── LOAD DOWNLOAD LINK FROM GITHUB ───────────────────────────────
+async function loadDownload() {
+  try {
+    const res = await fetch(RELEASES_API, {
+      headers: { "Accept": "application/vnd.github+json" }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const asset = (data.assets || []).find(a => a.name === "CrowSetup.exe");
+    if (asset && asset.browser_download_url) {
+      const btn = document.getElementById("download-btn");
+      if (btn) btn.href = asset.browser_download_url;
+      const navCta = document.querySelector(".nav__cta");
+      if (navCta) navCta.href = asset.browser_download_url;
+    }
+  } catch (e) {}
+}
+
+// ── HERO BUTTON → real download once loaded ───────────────────────
+async function updateHeroBtn() {
+  const btn = document.getElementById("download-btn");
+  const asset_url = btn ? btn.getAttribute("href") : null;
+  const heroBtn = document.querySelector('.hero__actions .btn--primary');
+  if (heroBtn && asset_url && asset_url !== "#" && !asset_url.endsWith("#download")) {
+    heroBtn.href = asset_url;
+  }
+}
+
+// ── THE TOOLBOX, LIVE FROM THE DATABASE ───────────────────────────
+//
+// One call does the stat bar AND the tool grid, because both are the
+// same list counted two ways -- and a page that says "24 tools" above a
+// grid of 12 is worse than one that never claimed a number.
+//
+// It reads crow_tools_manifest('live'), the same function the installed
+// app calls to learn what it should have. So a tool released from the
+// admin desk appears here on the next page load, with no deploy.
+//
+// A direct ?select= on crow_tools cannot work and never could: the table
+// is RLS-protected, and its columns are `category` and `channel` -- not
+// the `grouping` and `status` an earlier version of this page asked for.
+// That query 400'd on every visit and the numbers you saw were the
+// hardcoded fallbacks in the HTML.
+async function loadTools() {
+  let tools;
+  try {
+    const res = await fetch(SUPA_URL + "/rest/v1/rpc/crow_tools_manifest", {
+      method: "POST",
+      headers: {
+        "apikey": SUPA_ANON,
+        "Authorization": "Bearer " + SUPA_ANON,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ p_channel: "live" })
+    });
+    if (!res.ok) return;
+    tools = await res.json();
+  } catch (e) { return; }
+
+  if (!Array.isArray(tools) || !tools.length) return;   // keep the fallback cards
+
+  const cats = [...new Set(tools.map(t => t.category).filter(Boolean))];
+
+  const te = document.getElementById("stat-tools");
+  const ce = document.getElementById("stat-cats");
+  const cc = document.getElementById("custom-tool-count");
+  if (te) te.textContent = tools.length + "+";
+  if (ce && cats.length) ce.textContent = cats.length;
+  if (cc) cc.textContent = tools.length;
+
+  const esc = s => String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+  const grid = document.getElementById("tools-grid");
+  if (grid) {
+    grid.innerHTML = tools.map(t =>
+      '<div class="tool-card">' +
+        '<div class="tool-card__cat">' + esc(t.category) + "</div>" +
+        "<h3>" + esc(t.tool_name) + "</h3>" +
+        "<p>" + esc(t.description) + "</p>" +
+      "</div>"
+    ).join("");
+  }
+}
+
+// ── VISITOR BAR (live counts) ─────────────────────────────────────
+async function initVisitorBar() {
+  const el = id => document.getElementById(id);
+
+  // Record this visit (fire and forget)
+  fetch(SUPA_URL + '/rest/v1/rpc/crow_record_visit', {
+    method: 'POST',
+    headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + SUPA_ANON,
+               'Content-Type': 'application/json' },
+    body: JSON.stringify({ p_page: '/crow' })
+  }).catch(() => {});
+
+  try {
+    const res = await fetch(SUPA_URL + '/rest/v1/rpc/crow_visit_counts', {
+      method: 'POST',
+      headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + SUPA_ANON,
+                 'Content-Type': 'application/json' },
+      body: '{}'
+    });
+    const d = await res.json();
+    const fmt = n => {
+      const num = parseInt(n) || 0;
+      return num >= 1000 ? (num/1000).toFixed(1)+'k' : String(num);
+    };
+    if(el('vs-today')) el('vs-today').textContent = fmt(d.today);
+    if(el('vs-month')) el('vs-month').textContent = fmt(d.month);
+    if(el('vs-year'))  el('vs-year').textContent  = fmt(d.year);
+  } catch(e) {
+    ['vs-today','vs-month','vs-year'].forEach(id => {
+      if(el(id)) el(id).textContent = '0';
+    });
+  }
+}
+
+// ── COMBO OFFER (from the platform catalogue) ─────────────────────
+async function loadCombo() {
+  try {
+    const res = await fetch(SUPA_URL + "/rest/v1/rpc/ps_catalogue", {
+      method: "POST",
+      headers: { "apikey": SUPA_ANON, "Authorization": "Bearer " + SUPA_ANON,
+                 "Content-Type": "application/json" },
+      body: "{}"
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const bundles = (data && data.bundles) || [];
+    if (!bundles.length) return;
+
+    const b = bundles[0];
+    const fmt = v => (v == null || v === "") ? null : "₹" + Number(v).toLocaleString("en-IN");
+    const esc = s => String(s == null ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+    const items = (b.items || []).map(i =>
+      "<li>" + esc(i.product_name || i.product) + "</li>").join("");
+
+    const price  = fmt(b.price);
+    const list   = fmt(b.list_total);
+    const saving = fmt(b.saving);
+
+    document.getElementById("combo-slot").innerHTML =
+      '<div class="combo">' +
+        "<div>" +
+          "<h3>" + esc(b.name) + "</h3>" +
+          "<p>" + esc(b.description || "") + "</p>" +
+          "<ul>" + items + "</ul>" +
+        "</div>" +
+        '<div class="combo-price">' +
+          (list && Number(b.saving) > 0 ? '<span class="cstrike">' + list + "</span>" : "") +
+          '<span class="cprice">' + (price || "—") + "</span>" +
+          (saving && Number(b.saving) > 0
+            ? '<span class="csaving">You save ' + saving + "</span>"
+            : '<span class="csaving"></span>') +
+          '<a class="btn btn--primary" href="index.html#combo">See the combo</a>' +
+        "</div>" +
+      "</div>";
+  } catch(e) {}
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadPricing();
+  await loadDownload();
+  updateHeroBtn();
+  initVisitorBar();
+  loadTools();
+  loadCombo();
+});
+
+// ── CONTACT MODAL ─────────────────────────────────────────────────
+function openModal() {
+  document.getElementById("contact-modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+  setTimeout(() => document.getElementById("cf-name").focus(), 200);
+}
+function closeModal() {
+  document.getElementById("contact-modal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+async function submitContact() {
+  const name    = document.getElementById("cf-name").value.trim();
+  const mobile  = document.getElementById("cf-mobile").value.trim();
+  const email   = document.getElementById("cf-email").value.trim();
+  const topic   = document.getElementById("cf-topic").value;
+  const message = document.getElementById("cf-message").value.trim();
+  const status  = document.getElementById("cf-status");
+  const btn     = document.getElementById("cf-submit");
+
+  if (!name || !mobile || !email || !message) {
+    status.textContent = "Please fill in all required fields.";
+    status.className = "form-status error";
+    return;
+  }
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+    status.textContent = "Please enter a valid email address.";
+    status.className = "form-status error";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+  status.textContent = "";
+  status.className = "form-status";
+
+  try {
+    const res = await fetch(SUPA_URL + "/rest/v1/rpc/crow_website_enquiry", {
+      method: "POST",
+      headers: {
+        "apikey": SUPA_ANON,
+        "Authorization": "Bearer " + SUPA_ANON,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        p_name: name, p_mobile: mobile, p_email: email,
+        p_topic: topic, p_message: message
+      })
+    });
+    const data = await res.json();
+    if (data && data.ok) {
+      status.textContent = "Thank you! We will get back to you within one business day.";
+      status.className = "form-status success";
+      btn.textContent = "Sent ✓";
+      ["cf-name","cf-mobile","cf-email","cf-message"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      document.getElementById("cf-topic").selectedIndex = 0;
+      setTimeout(closeModal, 3000);
+      return;
+    } else {
+      throw new Error((data && data.message) || "Could not send.");
+    }
+  } catch(e) {
+    status.textContent = "Could not send right now. Please email us directly at patternscoutsinfo@gmail.com";
+    status.className = "form-status error";
+    btn.disabled = false;
+    btn.textContent = "Send message";
+  }
+}
+</script>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contact-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal__head">
+      <button class="modal__close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <h3>Get in touch</h3>
+      <p>Tell us what you need. We usually reply within one business day.</p>
+    </div>
+    <div class="modal__body">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf-name">Full name *</label>
+          <input type="text" id="cf-name" placeholder="Rahul Sharma" required>
+        </div>
+        <div class="form-group">
+          <label for="cf-mobile">Mobile number *</label>
+          <input type="tel" id="cf-mobile" placeholder="+91 98765 43210" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cf-email">Email address *</label>
+        <input type="email" id="cf-email" placeholder="rahul@company.com" required>
+      </div>
+      <div class="form-group">
+        <label for="cf-topic">What is this about?</label>
+        <select id="cf-topic">
+          <option value="Product enquiry">Product enquiry</option>
+          <option value="Pricing &amp; plans">Pricing &amp; plans</option>
+          <option value="Tool request">Tool request — I need something Crow doesn't have yet</option>
+          <option value="Technical support">Technical support</option>
+          <option value="Bulk / team licence">Bulk / team licence</option>
+          <option value="Other">Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cf-message">Your message *</label>
+        <textarea id="cf-message" placeholder="Describe what you are looking for, or what problem you are trying to solve. The more detail you give, the better we can help."></textarea>
+      </div>
+      <button class="form-submit" id="cf-submit" onclick="submitContact()">Send message</button>
+      <div class="form-status" id="cf-status"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
