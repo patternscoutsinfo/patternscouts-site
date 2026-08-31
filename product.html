@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PatternScouts</title>
+<meta name="description" content="What this PatternScouts software is built for, and what it costs.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Pattern<span>Scouts</span></a>
+    <nav>
+      <a href="index.html#software">All software</a>
+      <a href="index.html#combo">Combo</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <a class="back" href="index.html">&larr; All software</a>
+      <div id="head">
+        <div class="state">Loading…</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about-section" hidden>
+    <div class="wrap">
+      <div id="what"></div>
+      <div class="prose" id="about"></div>
+    </div>
+  </section>
+
+  <section class="section" id="plans-section" hidden>
+    <div class="wrap">
+      <h2>What it costs</h2>
+      <p class="sub" id="plans-sub"></p>
+      <div class="grid" id="plans"></div>
+      <div id="also"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>PatternScouts · <a id="support-link" href="index.html#contact">Get in touch</a></p>
+    <p>Prices shown in Indian rupees. Payment by UPI.</p>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/product.js"></script>
+</body>
+</html>
