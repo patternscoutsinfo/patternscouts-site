@@ -20,28 +20,12 @@
     return "";
   }
 
-  /* The headline price for a card: the cheapest real plan.
-
-     Trials are excluded deliberately. A trial is priced to be nearly
-     free -- Crow's is Rs 10 -- so including it would advertise Crow at
-     Rs 10 when it costs Rs 499. The convention is that a trial plan has
-     the code 'trial', which both products already follow; a new product
-     only has to keep that convention to inherit this behaviour. */
-  function headlinePlan(plans) {
-    if (!plans || !plans.length) return null;
-    var real = plans.filter(function (p) { return p.code !== "trial"; });
-    var pool = real.length ? real : plans;
-    return pool.reduce(function (best, p) {
-      return best === null || Number(p.price) < Number(best.price) ? p : best;
-    }, null);
-  }
-
   function productCard(p, symbol) {
-    var plan = headlinePlan(p.plans);
-    var price = plan ? A.money(plan.price, symbol) : null;
-    var strike = plan ? A.money(plan.strike_price, symbol) : null;
-    var href = "product.html?p=" + encodeURIComponent(p.slug);
+    var href = window.PSPages.href(p.slug);
 
+    /* No price on the front page. A card here answers "what is this and
+       is it for me"; the number belongs on the product's own page, next
+       to what you actually get for it. */
     var priceBlock = "";
 
     var cta = p.sellable
