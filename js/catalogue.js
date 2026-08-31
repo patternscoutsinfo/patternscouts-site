@@ -42,21 +42,7 @@
     var strike = plan ? A.money(plan.strike_price, symbol) : null;
     var href = "product.html?p=" + encodeURIComponent(p.slug);
 
-    var priceBlock;
-    if (p.status === "coming_soon") {
-      priceBlock = '<p class="price-note">Not on sale yet. Read what it does →</p>';
-    } else if (price) {
-      priceBlock =
-        '<div class="price-row">' +
-          '<span class="price">' + price + "</span>" +
-          (strike ? '<span class="strike">' + strike + "</span>" : "") +
-          '<span class="per">' + (plan.days ? "per " + A.planPeriod(plan.days).replace(/^an? /, "") : "one-time") + "</span>" +
-        "</div>" +
-        '<p class="price-note">from · ' + A.escapeHtml(plan.name) + " plan</p>";
-    } else {
-      // No usable price came back. Never invent one.
-      priceBlock = '<p class="price-note">Prices loading — <a href="' + href + '">see details</a></p>';
-    }
+    var priceBlock = "";
 
     var cta = p.sellable
       ? '<a class="btn btn-primary" href="' + href + '">See plans</a>'
