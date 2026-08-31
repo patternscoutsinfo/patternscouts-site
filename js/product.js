@@ -110,7 +110,22 @@
           '<div class="what"><h2>What it is built for</h2><p>' +
           A.escapeHtml(p.what_it_is_for) + "</p></div>";
       }
-      elAbout.innerHTML = A.paragraphs(p.long_description);
+
+      var aboutHtml = A.paragraphs(p.long_description);
+
+      // If the product has a features array, render them as a grid
+      if (Array.isArray(p.features) && p.features.length) {
+        var featureItems = p.features.map(function (f) {
+          var title = typeof f === "object" ? (f.title || f.name || "") : String(f);
+          var desc  = typeof f === "object" ? (f.description || f.desc || "") : "";
+          return '<div class="feature-item"><h4>' + A.escapeHtml(title) + "</h4>" +
+            (desc ? '<p>' + A.escapeHtml(desc) + "</p>" : "") +
+            "</div>";
+        }).join("");
+        aboutHtml += '<div class="feature-list">' + featureItems + "</div>";
+      }
+
+      elAbout.innerHTML = aboutHtml;
       secAbout.hidden = false;
 
       var plans = p.plans || [];
