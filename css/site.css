@@ -58,7 +58,7 @@ a:focus-visible, button:focus-visible {
 
 /* ---------------------------------------------------------------- head */
 .top {
-  background: var(--green-dark);
+  background: #1B2030;
   color: #fff;
   padding: 14px 0;
 }
@@ -230,22 +230,43 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ------------------------------------------------------- product page */
-.prose { max-width: 62ch; }
-.prose p { margin: 0 0 1em; }
+.prose { max-width: 72ch; }
+.prose p { margin: 0 0 1em; font-size: 1.06rem; line-height: 1.75; }
 .what {
   background: var(--green-pale);
   border-left: 4px solid var(--accent);
   border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 22px 26px;
-  margin: 0 0 34px;
+  padding: 28px 32px;
+  margin: 0 0 40px;
 }
 .what h2 {
   font-family: var(--display);
-  font-size: 1.1rem;
-  margin: 0 0 8px;
+  font-size: 1.15rem;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+  color: var(--green-dark);
+}
+.what p { margin: 0; font-size: 1.05rem; line-height: 1.7; }
+
+.feature-list {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin: 32px 0;
+}
+.feature-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+}
+.feature-item h4 {
+  font-family: var(--display);
+  font-size: 1rem;
+  margin: 0 0 6px;
   letter-spacing: -0.01em;
 }
-.what p { margin: 0; }
+.feature-item p { margin: 0; color: var(--ink-soft); font-size: 0.9rem; }
 
 .plan-card { display: flex; flex-direction: column; }
 .plan-card .plan-name {
