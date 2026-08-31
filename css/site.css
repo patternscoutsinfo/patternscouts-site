@@ -1,0 +1,304 @@
+/* =====================================================================
+   PatternScouts
+
+   The palette, the type and the component feel are carried over from the
+   Crow site unchanged -- same greens, same paper, same IBM Plex / Space
+   Grotesk pairing -- and widened to hold more than one product.
+
+   Each product supplies its own accent colour from the database and the
+   cards pick it up through --accent. Adding a third product therefore
+   needs no CSS.
+   ===================================================================== */
+
+:root {
+  --green:      #17624F;
+  --green-dark: #0E3C30;
+  --green-mid:  #1E7A62;
+  --green-lo:   #D7E8E1;
+  --green-pale: #EEF5F2;
+
+  --ink:        #0E141B;
+  --ink-soft:   #56636E;
+  --paper:      #F0F2F0;
+  --card:       #FFFFFF;
+  --line:       #D3DAD6;
+  --rust:       #A8431E;
+
+  --mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans:    'IBM Plex Sans', system-ui, -apple-system, Segoe UI, sans-serif;
+  --display: 'Space Grotesk', system-ui, -apple-system, Segoe UI, sans-serif;
+
+  --accent: var(--green);
+  --radius: 14px;
+  --wrap: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 22px; }
+
+a { color: var(--green); }
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--rust);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---------------------------------------------------------------- head */
+.top {
+  background: var(--green-dark);
+  color: #fff;
+  padding: 14px 0;
+}
+.top .wrap { display: flex; align-items: center; gap: 14px; }
+.brand {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-decoration: none;
+}
+.brand span { color: var(--green-lo); }
+.top nav { margin-left: auto; display: flex; gap: 18px; }
+.top nav a {
+  color: var(--green-lo);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+.top nav a:hover { color: #fff; }
+
+/* ---------------------------------------------------------------- hero */
+.hero { padding: 72px 0 34px; }
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 5.2vw, 3.1rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0 0 14px;
+  max-width: 17ch;
+}
+.hero p.lede {
+  font-size: 1.14rem;
+  color: var(--ink-soft);
+  max-width: 56ch;
+  margin: 0;
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green-mid);
+  margin: 0 0 10px;
+}
+
+/* -------------------------------------------------------- product grid */
+.section { padding: 26px 0 54px; }
+.section > h2 {
+  font-family: var(--display);
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+.section > p.sub { color: var(--ink-soft); margin: 0 0 24px; }
+
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-top: 4px solid var(--accent);
+  transition: box-shadow .16s ease, transform .16s ease;
+}
+.card:hover { box-shadow: 0 10px 26px rgba(14,20,27,.09); transform: translateY(-2px); }
+
+.card .icon { font-size: 1.9rem; line-height: 1; margin-bottom: 12px; }
+.card h3 {
+  font-family: var(--display);
+  font-size: 1.22rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+.card .tagline { color: var(--accent); font-weight: 500; margin: 0 0 10px; font-size: 0.95rem; }
+.card .one-liner { color: var(--ink-soft); margin: 0 0 18px; flex: 1; }
+
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  vertical-align: middle;
+}
+.badge-soon { background: #FEF3C7; color: #92400E; border: 1px solid #FEBC2E; }
+.badge-beta { background: var(--green-lo); color: var(--green-dark); }
+
+.price-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.price {
+  font-family: var(--display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.strike { color: var(--ink-soft); text-decoration: line-through; font-size: 1rem; }
+.per { color: var(--ink-soft); font-family: var(--mono); font-size: 0.78rem; }
+.price-note { color: var(--ink-soft); font-size: 0.85rem; margin: 0 0 16px; }
+
+/* ------------------------------------------------------------- buttons */
+.btn {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 11px 18px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { filter: brightness(1.12); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { background: var(--green-pale); }
+.btn[aria-disabled="true"] {
+  background: var(--line); color: var(--ink-soft); cursor: not-allowed; filter: none;
+}
+
+/* -------------------------------------------------------------- combo */
+.combo {
+  background: var(--green-dark);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 32px;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.combo h3 {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  color: #fff;
+}
+.combo p { color: var(--green-lo); margin: 0 0 14px; max-width: 52ch; }
+.combo ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 8px; flex-wrap: wrap; }
+.combo li {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+.combo-price { text-align: right; }
+.combo-price .price { color: #6EE7B7; font-size: 2.3rem; display: block; }
+.combo-price .strike { color: rgba(255,255,255,.55); }
+.combo-price .saving {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: #4ADE80;
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* ------------------------------------------------------- product page */
+.prose { max-width: 62ch; }
+.prose p { margin: 0 0 1em; }
+.what {
+  background: var(--green-pale);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 22px 26px;
+  margin: 0 0 34px;
+}
+.what h2 {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+.what p { margin: 0; }
+
+.plan-card { display: flex; flex-direction: column; }
+.plan-card .plan-name {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.plan-card .blurb { color: var(--ink-soft); font-size: 0.92rem; margin: 0 0 16px; flex: 1; }
+
+.back {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+/* --------------------------------------------------------- states */
+.state {
+  padding: 42px 24px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  background: var(--card);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+.state.error { border-color: var(--rust); color: var(--rust); }
+
+/* ---------------------------------------------------------------- foot */
+.foot {
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+  padding: 28px 0 46px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+.foot a { color: var(--ink-soft); }
+
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+  .hero { padding: 44px 0 26px; }
+  .combo { grid-template-columns: 1fr; }
+  .combo-price { text-align: left; }
+  .top nav { gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .card:hover { transform: none; }
+}
