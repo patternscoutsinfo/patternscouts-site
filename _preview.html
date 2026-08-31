@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PatternScouts — offline preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<!-- =====================================================================
+     Offline preview. Not part of the deployed site.
+
+     Renders index.html's markup against a stubbed ps_catalogue() so the
+     layout can be checked without a database. The stub returns the real
+     live numbers (trial 10, monthly 499/1500, yearly 7999/15000, 20% off)
+     so what you see here is what the site will show once the SQL is run.
+
+     Delete this file before deploying, or leave it -- it reads nothing.
+     ===================================================================== -->
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Pattern<span>Scouts</span></a>
+    <nav><a href="#software">Software</a><a href="#combo">Combo</a><a href="#contact">Contact</a></nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">PatternScouts · offline preview</p>
+      <h1>Software for the work you keep repeating.</h1>
+      <p class="lede">Every one of these started as a job somebody was doing by hand, every week, in a spreadsheet. Pick the one that matches your desk — or take all of them together for less.</p>
+    </div>
+  </section>
+
+  <section class="section" id="software">
+    <div class="wrap">
+      <h2>All our software</h2>
+      <p class="sub">Click any one to see what it is built for, and what it costs on its own.</p>
+      <div class="grid" id="products"><div class="state">Loading…</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="combo">
+    <div class="wrap">
+      <h2>Buy more than one</h2>
+      <p class="sub">Everything together, for less than the parts.</p>
+      <div id="bundles"><div class="state">Loading…</div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="contact">
+  <div class="wrap"><p>PatternScouts · <a id="support-link" href="#">Get in touch</a></p></div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/pages.js"></script>
+<script>
+/* Stub the one network call with what the real RPC will return. */
+window.PSApi.rpc = function (name) {
+  if (name !== "ps_catalogue") return Promise.resolve(null);
+  return Promise.resolve({
+    brand: "PatternScouts", currency: "INR", currency_symbol: "Rs.",
+    support_email: "patternscoutsinfo@gmail.com", combo_discount_pct: 20,
+    products: [
+      { slug: "crow", name: "Crow Data Analytics",
+        tagline: "The spreadsheet work you keep doing by hand.",
+        one_liner: "A desktop toolkit that takes the repetitive Excel jobs off your desk and does them in seconds.",
+        status: "live", sellable: true, icon: "🐦", accent_colour: "#17624F", sort_order: 10,
+        plans: [
+          { code: "trial",   name: "Trial",   days: 30,  price: 10,   strike_price: null, currency: "INR", seat_limit: 1, features: [] },
+          { code: "monthly", name: "Monthly", days: 30,  price: 499,  strike_price: 1500, currency: "INR", seat_limit: 1, features: [] },
+          { code: "yearly",  name: "Yearly",  days: 365, price: 7999, strike_price: 15000, currency: "INR", seat_limit: 1, features: [] }
+        ] },
+      { slug: "eagle", name: "Eagle BI Presentation",
+        tagline: "Folders of spreadsheets in. A Power BI dashboard out.",
+        one_liner: "Point Eagle at a folder of files and it builds the semantic model, the visuals and the report for you.",
+        status: "coming_soon", sellable: false, icon: "🦅", accent_colour: "#E38B00", sort_order: 20,
+        plans: [] }
+    ],
+    bundles: [
+      { slug: "all-access", name: "All Access",
+        description: "Every piece of PatternScouts software, one price, for a year.",
+        status: "live", sellable: false, currency: "INR",
+        list_total: 7999, price: 6399.2, saving: 1599.8, discount_pct: 20,
+        items: [ { product: "crow", product_name: "Crow Data Analytics", plan_code: "yearly", price: 7999, days: 365 },
+                 { product: "eagle", product_name: "Eagle BI Presentation", plan_code: "yearly", price: 0, days: 365 } ] }
+    ]
+  });
+};
+</script>
+<script src="js/catalogue.js"></script>
+</body>
+</html>
