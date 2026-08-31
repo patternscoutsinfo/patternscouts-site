@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PatternScouts</title>
 <meta name="description" content="What this PatternScouts software is built for, and what it costs.">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/product-rich.css">
 </head>
 <body>
 
@@ -24,6 +24,7 @@
 </header>
 
 <main>
+  <!-- Generic header (always shown) -->
   <section class="hero">
     <div class="wrap">
       <a class="back" href="index.html">&larr; All software</a>
@@ -33,6 +34,161 @@
     </div>
   </section>
 
+  <!-- Rich Crow sections — hidden by default, shown only for crow -->
+  <div id="crow-rich" style="display:none">
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar">
+      <div class="wrap trust-bar__inner">
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Your data never leaves your computer</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>No Excel installation required</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Updates automatically in the background</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Made in Mumbai for Indian businesses</div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section class="rich-section rich-section--alt" id="how-it-works">
+      <div class="wrap">
+        <div class="rich-head">
+          <p class="rich-eyebrow">Getting started</p>
+          <h2>Four steps. Then you're working.</h2>
+          <p>No account to create before you can see anything. Download, register inside the app, pay once, and start.</p>
+        </div>
+        <div class="rich-steps">
+          <div class="rich-step">
+            <div class="rich-step__num">01</div>
+            <div class="rich-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div>
+            <h3>Download CrowSetup.exe</h3>
+            <p>One file. Double-click it. Crow installs itself with a Desktop shortcut. No admin password needed.</p>
+          </div>
+          <div class="rich-step">
+            <div class="rich-step__num">02</div>
+            <div class="rich-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <h3>Register inside Crow</h3>
+            <p>Fill in your name and contact details. Pick a plan. A QR code appears on screen for UPI payment.</p>
+          </div>
+          <div class="rich-step">
+            <div class="rich-step__num">03</div>
+            <div class="rich-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+            <h3>Pay by UPI</h3>
+            <p>Scan the QR code and pay. Your licence key arrives within one business day.</p>
+          </div>
+          <div class="rich-step">
+            <div class="rich-step__num">04</div>
+            <div class="rich-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <h3>Enter your key and start</h3>
+            <p>Paste the key once. Crow opens straight to your tools every time after that, and updates silently.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEFORE / AFTER -->
+    <section class="rich-section">
+      <div class="wrap">
+        <div class="rich-head">
+          <p class="rich-eyebrow">What Crow actually does</p>
+          <h2>Messy spreadsheet in. Clean result out.</h2>
+          <p>Every tool cleans your data on load — trailing spaces, mixed case, wrong date formats, numbers stored as text — before it even starts the analysis.</p>
+        </div>
+        <div class="ba">
+          <div class="ba__panel">
+            <div class="ba__panel-head ba__panel-head--bad">✕ &nbsp;What you have</div>
+            <div class="ba__row ba__row--header"><span>#</span><span>Vendor</span><span>Invoice</span><span>Amount</span></div>
+            <div class="ba__row"><span>1</span><span class="bad">&nbsp;shah traders</span><span class="bad">INV 0921</span><span class="bad">₹ 12,400 </span></div>
+            <div class="ba__row"><span>2</span><span class="bad">SHAH TRADERS  </span><span class="bad">inv-0921</span><span class="bad">12400</span></div>
+            <div class="ba__row"><span>3</span><span class="bad">Shah Traders</span><span class="bad">INV-0921</span><span class="bad">Rs12400</span></div>
+          </div>
+          <div class="ba__arrow">→</div>
+          <div class="ba__panel">
+            <div class="ba__panel-head ba__panel-head--good">✓ &nbsp;What Crow gives you</div>
+            <div class="ba__row ba__row--header"><span>#</span><span>Vendor</span><span>Invoice</span><span>Amount</span></div>
+            <div class="ba__row"><span>1</span><span class="good">Shah Traders</span><span class="good">INV-0921</span><span class="good">12,400.00</span></div>
+            <div class="ba__row"><span>2</span><span class="flag">Shah Traders</span><span class="flag">INV-0921</span><span class="flag">⚠ duplicate</span></div>
+            <div class="ba__row"><span>3</span><span class="flag">Shah Traders</span><span class="flag">INV-0921</span><span class="flag">⚠ duplicate</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- USP BAR -->
+    <div class="usp-bar">
+      <div class="wrap">
+        <div class="usp-bar__text">Don't see what you need? <em>We'll build it for you.</em> Every Crow tool started as a user request.</div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <section class="rich-section rich-section--alt" id="tools">
+      <div class="wrap">
+        <div class="rich-head">
+          <p class="rich-eyebrow">The toolbox</p>
+          <h2>Every job you keep doing by hand.</h2>
+          <p>Crow ships with tools across General, Operations, HR, Vendor, and GST. New tools arrive automatically without downloading anything.</p>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card"><div class="tool-card__cat">General</div><h3>Data Health Scorecard</h3><p>Score your spreadsheet for completeness, consistency and duplicates before you send it anywhere.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">General</div><h3>Duplicate Record Finder</h3><p>Find exact and near-duplicate rows across any column combination, with a fraud-risk flag.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">General</div><h3>Excel Merger</h3><p>Combine multiple Excel or CSV files into one clean sheet, with source-file tracking.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">General</div><h3>Cross Master ID Verifier</h3><p>Match IDs across two master files and flag every mismatch in seconds.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">General</div><h3>Stage to Stage Ageing</h3><p>Calculate how long records spent at each stage — approvals, dispatch, payment.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">Operations</div><h3>Container Weight Pivot</h3><p>Pivot container weight data by date, route or product with one click.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">Operations</div><h3>Transaction Nullifier</h3><p>Identify transactions that cancel each other out — returns, reversals, credit notes.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">HR</div><h3>Salary CTC Audit</h3><p>Reconcile CTC components, check for discrepancies and produce a summary by grade.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">HR</div><h3>Attendance Audit</h3><p>Flag absences, late marks and anomalies from raw muster or biometric exports.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">Vendor</div><h3>Rate Updater</h3><p>Write updated rates into your Excel file by date range and column conditions.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">Vendor</div><h3>Vendor Duplicate Finder</h3><p>Detect duplicate invoices and payments across vendor registers, even with minor variations.</p></div>
+          <div class="tool-card"><div class="tool-card__cat">GST</div><h3>Group and Aggregate</h3><p>Group rows and aggregate values by any selected columns — totals, counts, averages.</p></div>
+        </div>
+        <p style="margin-top:20px;font-size:13px;font-family:'IBM Plex Mono',monospace;color:#56636E">New tools added regularly. Request one from inside Crow — it goes straight to us.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="rich-section" id="faq">
+      <div class="wrap" style="max-width:720px">
+        <div class="rich-head">
+          <p class="rich-eyebrow">Help</p>
+          <h2>Questions people actually ask.</h2>
+        </div>
+        <div class="faq-list">
+          <details open><summary>Does my data leave my computer?</summary><p>No. Crow opens your spreadsheet on your machine and writes the result back on your machine. The only time it contacts the internet is to check your licence and fetch new tool versions. Your data is never uploaded anywhere.</p></details>
+          <details><summary>Do I need Microsoft Excel installed?</summary><p>No. Crow reads and writes .xlsx and .csv files on its own. Excel does not need to be on the machine.</p></details>
+          <details><summary>How do updates work?</summary><p>Crow updates itself automatically in the background when your computer starts. You will never see a popup or be asked to do anything.</p></details>
+          <details><summary>I paid but my key has not arrived.</summary><p>Keys are sent by hand, usually within one business day. If it has been longer, email us with your payment screenshot and we will sort it the same day.</p></details>
+          <details><summary>Can I move the licence to another computer?</summary><p>Yes. Email us from your registered address with the new machine's details and we will move the key across.</p></details>
+          <details><summary>My antivirus is blocking Crow. What do I do?</summary><p>Add Crow.exe to your antivirus exclusion list. After that, Crow updates without interruption.</p></details>
+          <details><summary>Can I request a tool that doesn't exist yet?</summary><p>Yes — that is what the Request a tool button is for inside Crow. Describe the job you keep doing by hand and it comes straight to us.</p></details>
+          <details><summary>Windows says "Unknown publisher" when I download. Is it safe?</summary><p>Yes, completely safe. Click <strong>More info</strong> then <strong>Run anyway</strong> to install.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <div class="download-bar" id="download">
+      <div class="wrap">
+        <div class="download-bar__inner">
+          <div>
+            <h2>Ready to stop doing this by hand?</h2>
+            <p>Download CrowSetup.exe and run it against a file you already know the answer to.</p>
+            <div class="download-bar__note" style="margin-top:12px">Windows 10 &amp; 11 · 64-bit · No Excel needed · No admin password</div>
+            <div class="download-bar__note" style="margin-top:5px">Windows may show a safety prompt on first run — click <strong style="color:rgba(255,255,255,.45)">More info → Run anyway</strong>.</div>
+          </div>
+          <div class="download-bar__actions">
+            <a href="#" id="crow-download-btn" class="download-btn">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download CrowSetup.exe
+            </a>
+            <a href="mailto:patternscoutsinfo@gmail.com" class="download-btn-ghost">Email us a question</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end #crow-rich -->
+
+  <!-- Generic about / plans (for all products, including crow) -->
   <section class="section" id="about-section" hidden>
     <div class="wrap">
       <div id="what"></div>
