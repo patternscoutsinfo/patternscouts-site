@@ -153,6 +153,22 @@
         link.href = "mailto:" + p.support_email;
         link.textContent = p.support_email;
       }
+
+      // Show the rich Crow page sections and load download link
+      if (slug === "crow") {
+        var crowRich = document.getElementById("crow-rich");
+        if (crowRich) crowRich.style.display = "";
+
+        fetch("https://api.github.com/repos/patternscoutsinfo/crow-releases/releases/latest", {
+          headers: { "Accept": "application/vnd.github+json" }
+        }).then(function (r) { return r.json(); }).then(function (data) {
+          var asset = (data.assets || []).find(function (a) { return a.name === "CrowSetup.exe"; });
+          if (asset && asset.browser_download_url) {
+            var btn = document.getElementById("crow-download-btn");
+            if (btn) btn.href = asset.browser_download_url;
+          }
+        }).catch(function () {});
+      }
     })
     .catch(function (e) {
       fail("Could not load this page just now. Please refresh, or get in touch.");
